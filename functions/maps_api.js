@@ -45,7 +45,7 @@ exports.eveningCommuteTime = function (origin, destination, callback) {
 };
 
 exports.getAddress = function(lat, lng, callback) {
-  googleMapsClient.reverseGeocode({
+    googleMapsClient.reverseGeocode({
     'latlng' : [lat, lng],
   }, function(err, response) {
     if (!err) {
@@ -54,3 +54,16 @@ exports.getAddress = function(lat, lng, callback) {
     }
   });
 };
+
+exports.getLatLng = function(address, callback) {
+    googleMapsClient.geocode({
+    'address' : address,
+  }, function(err, response) {
+    if (!err) {
+      // console.log(response.results[0]);
+      callback.call(this, response.json.results[0].geometry.location);
+    }
+  });
+};
+
+
