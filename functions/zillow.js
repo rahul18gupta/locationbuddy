@@ -1,4 +1,7 @@
-exports.getPrice = function (address, cityzip, callback) {
+exports.getPrice = function (addressObj, callback) {
+
+  var address = addressObj['street-address']
+  var cityzip = addressObj['city'] + ", " + addressObj['zip-code']
 
   const https = require("https");
   var convert = require('xml2json');
