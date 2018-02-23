@@ -2,6 +2,10 @@ var googleMapsClient = require('@google/maps').createClient({
   key: 'AIzaSyCeijhr1teyOskO_PeMM_B0GbRfieWb8EE'
 });
 
+function nameCombine(obj) {
+  return obj['street-address'] + ", " + obj['city'], ", " + obj['admin-area'] + ", " + obj['zip-code']
+};
+
 function morningTime() {
   var date = new Date();
   date.setHours(9);
@@ -18,13 +22,13 @@ exports.moringCommuteTime = function (origin, destination, callback) {
   googleMapsClient.directions({
     //origin: '1600 Amphitheatre Parkway, Mountain View, CA',
     //destination: '500 Amalfi Loop, Milpitas, CA',
-    origin: origin,
-    destination: destination,
+    origin: nameCombine(origin),
+    destination: nameCombine(destination),
     mode: 'driving',
     departure_time: morningTime(), 
   }, function(err, response) {
     if (!err) {
-      callback.call(this, response.json.routes[0].legs[0].distance.text + "-" + response.json.routes[0].legs[0].duration.text);
+      callback.call(this, "Average Commute Time Here to Office: " + response.json.routes[0].legs[0].duration.text);
     }
   });
 };
@@ -33,13 +37,13 @@ exports.eveningCommuteTime = function (origin, destination, callback) {
   googleMapsClient.directions({
     //origin: '1600 Amphitheatre Parkway, Mountain View, CA',
     //destination: '500 Amalfi Loop, Milpitas, CA',
-    origin: origin,
-    destination: destination,
+    origin: nameCombine(origin),
+    destination: nameCombine(destination),
     mode: 'driving',
     departure_time: eveningTime(), 
   }, function(err, response) {
     if (!err) {
-      callback.call(this, response.json.routes[0].legs[0].distance.text + "-" + response.json.routes[0].legs[0].duration.text);
+      callback.call(this, "Average Commute Time from Office to Here: " + response.json.routes[0].legs[0].duration.text);
     }
   });
 };
