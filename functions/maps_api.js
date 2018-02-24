@@ -3,7 +3,7 @@ var googleMapsClient = require('@google/maps').createClient({
 });
 
 function nameCombine(obj) {
-  return obj['street-address'] + ", " + obj['city'], ", " + obj['admin-area'] + ", " + obj['zip-code']
+  return obj['street-address']||'' + ", " + obj['city']||'' + ", " + obj['admin-area']||'' + ", " + obj['zip-code']||'';
 };
 
 function morningTime() {
@@ -19,6 +19,10 @@ function eveningTime() {
 };
 
 exports.moringCommuteTime = function (origin, destination, callback) {
+  console.log(origin);
+  console.log(destination);
+  console.log(nameCombine(origin));
+  console.log(nameCombine(destination));
   googleMapsClient.directions({
     //origin: '1600 Amphitheatre Parkway, Mountain View, CA',
     //destination: '500 Amalfi Loop, Milpitas, CA',
