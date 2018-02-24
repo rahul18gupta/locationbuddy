@@ -1,4 +1,11 @@
-exports.myWalkScore = function(address, lat, lng, callback) {
+var util = require('./util.js')
+var maps = require('./maps_api.js')
+
+exports.myWalkScore = function(addressObj, callback) {
+  var address = util.nameCombine(addressObj)
+  maps.getLatLng(address, (response) => {
+   var lat = response.lat; var lng = response.lng;
+
   const http = require("http");
 
 const url =
@@ -14,8 +21,10 @@ http.get(url, res => {
   res.on("end", () => {
     var output = new Object();
     body = JSON.parse(body);
- //   output.walkscore = body.walkscore
-    callback.call(this, body);
+    callback.call(this, `Walkscore is ${body.walkscore}. Area is described as "${body.description}".`);
   });
 });
+
+   });
+
 }
