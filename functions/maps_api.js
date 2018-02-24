@@ -29,7 +29,9 @@ exports.moringCommuteTime = function (origin, destination, callback) {
   }, function(err, response) {
     if (!err) {
       callback.call(this, "Average Commute Time Here to Office: " + response.json.routes[0].legs[0].duration.text);
+      return;
     }
+    callback.call(this, JSON.stringify(err) + "");
   });
 };
 

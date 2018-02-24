@@ -20,7 +20,7 @@ exports.getPrice = function (addressObj, callback) {
           // console.dir(json);
           var zestimate = json['SearchResults:searchresults'].response.results.result.zestimate.amount.$t;
           // console.dir(zestimate);
-	  callback.call(this, `Estiamted house price is $${zestimate}.`);
+	  callback.call(this, `Estimated house price is $${zestimate}.`);
           });
       });
 
